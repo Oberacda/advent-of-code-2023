@@ -53,8 +53,7 @@ fn get_number_positions(input: &str) -> (Vec<Number>, Vec<Symbol>) {
             }
         }
 
-        if current_number_start_index.is_some() {
-            let start_index = current_number_start_index.unwrap();
+        if let Some(start_index) = current_number_start_index {
             let number = u64::from_str(current_number_digits.as_str()).unwrap();
             numbers.push(Number {
                 y: line_index,
@@ -70,7 +69,7 @@ fn get_number_positions(input: &str) -> (Vec<Number>, Vec<Symbol>) {
     (numbers, symbols)
 }
 
-fn is_symbol_neighbor(number: &Number, symbol_covered_positions: &Vec<(usize, usize)>) -> bool {
+fn is_symbol_neighbor(number: &Number, symbol_covered_positions: &[(usize, usize)]) -> bool {
     for idx in number.start_x..number.end_x + 1 {
         let index_covered = symbol_covered_positions.contains(&(idx, number.y));
         if !index_covered {
@@ -79,7 +78,7 @@ fn is_symbol_neighbor(number: &Number, symbol_covered_positions: &Vec<(usize, us
             return true;
         }
     }
-    return false;
+    false
 }
 
 fn get_symbol_covered_positions(symbols: Vec<Symbol>) -> Vec<(usize, usize)> {
@@ -96,18 +95,16 @@ fn get_symbol_covered_positions(symbols: Vec<Symbol>) -> Vec<(usize, usize)> {
             let idy_0 = x.line;
             let idy_p1 = x.line + 1;
 
-            if opt_idy_n1.is_some() {
-                let idy_n1 = opt_idy_n1.unwrap();
+            if let Some(idy_n1) = opt_idy_n1 {
                 results.extend_from_slice(&[(idx_0, idy_n1), (idx_p1, idy_n1)]);
             }
-            if opt_idx_n1.is_some() {
-                let idx_n1 = opt_idx_n1.unwrap();
+            if let Some(idx_n1) = opt_idx_n1 {
                 results.extend_from_slice(&[(idx_n1, idy_0), (idx_n1, idy_p1)]);
             }
-            if opt_idx_n1.is_some() && opt_idy_n1.is_some() {
-                let idy_n1 = opt_idy_n1.unwrap();
-                let idx_n1 = opt_idx_n1.unwrap();
-                results.push((idx_n1, idy_n1));
+            if let Some(idx_n1) = opt_idx_n1 {
+                if let Some(idy_n1) = opt_idy_n1 {
+                    results.push((idx_n1, idy_n1));
+                }
             }
             results.extend_from_slice(&[(idx_0, idy_p1), (idx_p1, idy_p1), (idx_p1, idy_0)]);
 
@@ -139,7 +136,7 @@ mod tests {
 
     #[test]
     fn test_input01() {
-        let input = include_str!("../resources/test_input_01.txt");
+        let input = include_str!("../../resources/test_input_01.txt");
         let (numbers, symbols) = get_number_positions(input);
         assert_eq!(numbers.len(), 10);
         assert_eq!(symbols.len(), 6);
@@ -150,7 +147,7 @@ mod tests {
 
     #[test]
     fn test_input02() {
-        let input = include_str!("../resources/test_input_02.txt");
+        let input = include_str!("../../resources/test_input_02.txt");
         let (numbers, symbols) = get_number_positions(input);
         let result = get_result(numbers, symbols);
         assert_eq!(result, 413);
@@ -158,7 +155,7 @@ mod tests {
 
     #[test]
     fn test_input03() {
-        let input = include_str!("../resources/test_input_03.txt");
+        let input = include_str!("../../resources/test_input_03.txt");
         let (numbers, symbols) = get_number_positions(input);
         assert_eq!(symbols.len(), 9);
         assert_eq!(numbers.len(), 19);

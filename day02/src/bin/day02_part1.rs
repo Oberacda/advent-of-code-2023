@@ -1,4 +1,3 @@
-use anyhow::Error;
 use regex::Regex;
 use std::str::FromStr;
 
@@ -24,7 +23,7 @@ fn parse_input(inputs: Vec<String>) -> Vec<Game> {
     let result: Vec<Game> = inputs
         .iter()
         .map(|input| {
-            let (game_id_str, rounds_str) = input.split_once(":").unwrap();
+            let (game_id_str, rounds_str) = input.split_once(':').unwrap();
             let game_id = u64::from_str(
                 game_re
                     .captures(game_id_str)
@@ -36,7 +35,7 @@ fn parse_input(inputs: Vec<String>) -> Vec<Game> {
             .unwrap();
 
             let rounds: Vec<Round> = rounds_str
-                .split_terminator(";")
+                .split_terminator(';')
                 .map(|x| {
                     let red_cubes: u64 = match red_re.captures(x) {
                         None => 0,

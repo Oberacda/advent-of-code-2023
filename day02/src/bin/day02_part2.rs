@@ -1,4 +1,3 @@
-use anyhow::Error;
 use regex::Regex;
 use std::str::FromStr;
 
@@ -11,12 +10,10 @@ struct Round {
 
 #[derive(Default)]
 struct Game {
-    id: u64,
     rounds: Vec<Round>,
 }
 
 fn parse_input(inputs: Vec<String>) -> Vec<Game> {
-    let game_re = Regex::new(r"^Game\s(\d+)$").unwrap();
     let red_re = Regex::new(r"(?P<red>\d+)\sred").unwrap();
     let green_re = Regex::new(r"(?P<green>\d+)\sgreen").unwrap();
     let blue_re = Regex::new(r"(?P<blue>\d+)\sblue").unwrap();
@@ -24,19 +21,10 @@ fn parse_input(inputs: Vec<String>) -> Vec<Game> {
     let result: Vec<Game> = inputs
         .iter()
         .map(|input| {
-            let (game_id_str, rounds_str) = input.split_once(":").unwrap();
-            let game_id = u64::from_str(
-                game_re
-                    .captures(game_id_str)
-                    .unwrap()
-                    .get(1)
-                    .unwrap()
-                    .as_str(),
-            )
-            .unwrap();
+            let (_, rounds_str) = input.split_once(':').unwrap();
 
             let rounds: Vec<Round> = rounds_str
-                .split_terminator(";")
+                .split_terminator(';')
                 .map(|x| {
                     let red_cubes: u64 = match red_re.captures(x) {
                         None => 0,
@@ -60,7 +48,6 @@ fn parse_input(inputs: Vec<String>) -> Vec<Game> {
                 .collect();
 
             Game {
-                id: game_id,
                 rounds,
             }
         })
@@ -74,7 +61,7 @@ fn get_result(games: Vec<Game>) -> u64 {
         let max_red = game.rounds.iter().map(|x| x.red).max().unwrap();
         let max_green = game.rounds.iter().map(|x| x.green).max().unwrap();
         let max_blue = game.rounds.iter().map(|x| x.blue).max().unwrap();
-        result += (max_red * max_green * max_blue);
+        result += max_red * max_green * max_blue;
     }
     result
 }
