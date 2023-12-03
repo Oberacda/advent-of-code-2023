@@ -9,7 +9,7 @@ fn main() {
 
     for input_line in input_lines {
         let mut digits = input_line.chars().filter(|x| x.is_ascii_digit());
-        let first_numeric_char = digits.nth(0).unwrap();
+        let first_numeric_char = digits.next().unwrap();
         let last_numeric_char = match digits.nth_back(0) {
             Some(digit) => digit,
             None => first_numeric_char,

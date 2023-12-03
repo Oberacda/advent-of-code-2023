@@ -79,7 +79,7 @@ fn is_gear_neighbor(number: &Number, gear_covered_positions: &Vec<(usize, usize)
             return true;
         }
     }
-    return false;
+    false
 }
 
 fn get_gear_covered_positions(gear: &Gear) -> Vec<(usize, usize)> {

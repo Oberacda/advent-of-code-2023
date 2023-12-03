@@ -126,7 +126,7 @@ fn get_result(numbers: Vec<Number>, symbols: Vec<Symbol>) -> u64 {
 }
 
 fn main() {
-    let input = include_str!("../resources/input_01.txt");
+    let input = include_str!("../../resources/input_01.txt");
     let (numbers, symbols) = get_number_positions(input);
 
     let result = get_result(numbers, symbols);
