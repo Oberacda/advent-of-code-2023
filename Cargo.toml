@@ -1,3 +1,9 @@
 [workspace]
 resolver = "2"
 members = ["day01", "day02", "day03"]
+
+[workspace.package]
+authors = ["David Oberacker <developer@oberacker.me>"]
+edition = "2021"
+description = "Solution for this days Advent of Code exercise"
+publish = false
