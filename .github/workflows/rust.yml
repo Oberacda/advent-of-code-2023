@@ -19,6 +19,7 @@ jobs:
         with:
           toolchain: stable
       - uses: Swatinem/rust-cache@v2
+      - uses: taiki-e/install-action@nextest
       - name: Clippy
         uses: actions-rs/cargo@v1
         with:
@@ -31,5 +32,10 @@ jobs:
       - name: Test
         uses: actions-rs/cargo@v1
         with:
-          command: test
-          args: --verbose --all-features
+          command: nextest run
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: |
+            target/nextest/default/*.xml

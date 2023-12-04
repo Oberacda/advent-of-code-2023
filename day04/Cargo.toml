@@ -15,4 +15,3 @@ name = "day04_part1"
 name = "day04_part2"
 
 [dependencies]
-regex = "1.10.2"
