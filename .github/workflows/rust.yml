@@ -32,7 +32,8 @@ jobs:
       - name: Test
         uses: actions-rs/cargo@v1
         with:
-          command: nextest run
+          command: nextest
+          args: run
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
