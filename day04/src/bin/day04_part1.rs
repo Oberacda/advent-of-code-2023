@@ -1,6 +1,7 @@
 use std::collections::HashSet;
 use std::ops::Sub;
 use std::str::FromStr;
+use std::time::Instant;
 
 struct Card {
     winning_numbers: HashSet<u64>,
@@ -37,10 +38,13 @@ fn calculate_result(cards: Vec<Card>) -> u64 {
 
 
 fn main() {
+    let now = Instant::now();
     let input = include_str!("../../resources/input_01.txt");
     let cards = parse_input(input);
     let res = calculate_result(cards);
     println!("{}", res);
+    let elapsed = now.elapsed();
+    println!("Elapsed: {:?}", elapsed);
 }
 
 #[cfg(test)]

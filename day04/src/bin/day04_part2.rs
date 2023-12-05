@@ -48,7 +48,6 @@ fn calculate_result(cards: Vec<Card>) -> u64 {
 }
 
 fn main() {
-
     let input = include_str!("../../resources/input_01.txt");
     let cards = parse_input(input);
     let res = calculate_result(cards);
