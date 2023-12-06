@@ -1,12 +1,12 @@
 use std::time::Instant;
 
-use day05::{create_almanac, find_lowest_location, find_lowest_location_reverse_search, parse_seeds_part2};
+use day05::{create_almanac, find_lowest_location_compression, parse_seeds_part2};
 
 fn main() {
     let now = Instant::now();
     let input: Vec<&str> = include_str!("../../resources/input01.txt").split_terminator("\n\n").collect();
     let almanac = create_almanac(input, parse_seeds_part2);
-    let res = find_lowest_location_reverse_search(&almanac);
+    let res = find_lowest_location_compression(&almanac);
     println!("Result: {}", res);
     let elapsed = now.elapsed();
     println!("Elapsed: {:?}", elapsed);
@@ -14,7 +14,6 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use day05::find_lowest_location_reverse_search;
     use super::*;
 
     #[test]
@@ -22,7 +21,7 @@ mod tests {
 
         let input: Vec<&str> = include_str!("../../resources/test_input01.txt").split_terminator("\n\n").collect();
         let almanac = create_almanac(input, parse_seeds_part2);
-        let res = find_lowest_location(&almanac);
+        let res = find_lowest_location_compression(&almanac);
         assert_eq!(res, 46);
     }
 }
