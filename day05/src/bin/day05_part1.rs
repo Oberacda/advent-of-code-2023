@@ -1,5 +1,5 @@
 use std::time::Instant;
-use day05::{create_almanac, find_lowest_location, find_lowest_location_compression, parse_seeds_part1};
+use day05::{create_almanac, find_lowest_location_compression, parse_seeds_part1};
 
 fn main() {
     let now = Instant::now();

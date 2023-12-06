@@ -54,7 +54,7 @@ fn range_to_start_and_len(range: &GenericRange<u64>) -> Option<(u64, u64)> {
     Some((start, end))
 }
 
-fn compress_mapping(mappings: &Vec<(u64, u64, u64)>, sources: &Vec<(u64, u64)>) -> Vec<(u64, u64)> {
+fn compress_mapping(mappings: &[(u64, u64, u64)], sources: &[(u64, u64)]) -> Vec<(u64, u64)> {
     let mut result = Vec::new();
     for (source_start, source_len) in sources {
         let source_range = GenericRange::from(*source_start..*source_start+source_len);
