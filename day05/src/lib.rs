@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::path::Component::ParentDir;
 use std::str::FromStr;
 use regex::Regex;
 use itertools::Itertools;
@@ -28,24 +29,38 @@ fn get_location_from_seed(almanac: &Almanac, seed: &u64) -> u64 {
 
 
 fn get_seed_for_location(almanac: &Almanac, location: &u64) -> u64 {
-    let humidity = revese_lookup_mapping(&almanac.humidity_to_location, &location);
-    let temperature = revese_lookup_mapping(&almanac.temperature_to_humidity, &humidity);
-    let light = revese_lookup_mapping(&almanac.light_to_temperature, &temperature);
-    let water = revese_lookup_mapping(&almanac.water_to_light, &light);
-    let fertilizer = revese_lookup_mapping(&almanac.fertilizer_to_water, &water);
-    let soil = revese_lookup_mapping(&almanac.soil_to_fertilizer, &fertilizer);
-    revese_lookup_mapping(&almanac.seeds_to_soil, &soil);
+    let humidity = reverse_lookup_mapping(&almanac.humidity_to_location, location);
+    let temperature = reverse_lookup_mapping(&almanac.temperature_to_humidity, &humidity);
+    let light = reverse_lookup_mapping(&almanac.light_to_temperature, &temperature);
+    let water = reverse_lookup_mapping(&almanac.water_to_light, &light);
+    let fertilizer = reverse_lookup_mapping(&almanac.fertilizer_to_water, &water);
+    let soil = reverse_lookup_mapping(&almanac.soil_to_fertilizer, &fertilizer);
+    reverse_lookup_mapping(&almanac.seeds_to_soil, &soil)
 }
 
 pub fn find_lowest_location(almanac: &Almanac) -> u64 {
     almanac.seeds.par_iter().map(|x| get_location_from_seed(almanac, x)).min().unwrap()
 }
 
+pub fn find_lowest_location_reverse_search(almanac: &Almanac) -> u64 {
+    let mut locations: Vec<u64> = almanac.humidity_to_location.par_iter().flat_map(|(_, to, len)| *to..*to+*len).collect();
+
+    for location in 0..u64::MAX {
+        let seed = get_seed_for_location(almanac, &location);
+
+        if  almanac.seeds.binary_search(&seed).ok().is_some() {
+            return location
+        } else {
+            continue
+        }
+    }
+    0
+}
 fn lookup_mapping(map: &[(u64, u64, u64)], value: &u64) -> u64 {
     map.par_iter().find_first(|(from, _, len)| *from <= *value && *value < *from+len).map_or(*value, |(from, to, _)| to + (value - from))
 }
 
-fn revese_lookup_mapping(map: &[(u64, u64, u64)], value: &u64) -> u64 {
+fn reverse_lookup_mapping(map: &[(u64, u64, u64)], value: &u64) -> u64 {
     map.par_iter().find_first(|(_, to, len)| *to <= *value && *value < *to+len).map_or(*value, |(from, to, _)| from + (value - to))
 }
 
@@ -74,7 +89,7 @@ fn parse_mapping_lines(mapping_lines: &[& str]) -> HashMap<String, Vec<(u64, u64
 }
 
 pub fn parse_seeds_part1(seed_config: &str) -> Vec<u64> {
-    seed_config.split_terminator(':').nth(1).unwrap().split_ascii_whitespace().map(|x| u64::from_str(x).unwrap()).collect()
+    seed_config.split_terminator(':').nth(1).unwrap().split_ascii_whitespace().map(|x| u64::from_str(x).unwrap()).sorted().collect()
 }
 
 pub fn parse_seeds_part2(seed_config: &str) -> Vec<u64> {
