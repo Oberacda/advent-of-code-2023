@@ -6,7 +6,18 @@ edition.workspace = true
 description.workspace = true
 publish.workspace = true
 
+[lib]
+name = "day05"
+path = "src/lib.rs"
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[[bin]]
+name = "day05_part1"
+
+[[bin]]
+name = "day05_part2"
 
 [dependencies]
 regex = "1.10.2"
+itertools = "0.12.0"
+rayon = "1.7"

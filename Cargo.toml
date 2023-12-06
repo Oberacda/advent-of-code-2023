@@ -10,6 +10,6 @@ publish = false
 
 [profile.release]
 #incremental = true
-#debug = true
+debug = true
 #lto = "fat"
 
