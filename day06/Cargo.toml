@@ -1,0 +1,23 @@
+[package]
+name = "day06"
+version = "0.1.0"
+authors.workspace = true
+edition.workspace = true
+description.workspace = true
+publish.workspace = true
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+name = "day06"
+path = "src/lib.rs"
+
+
+[[bin]]
+name = "day06_part1"
+
+[[bin]]
+name = "day06_part2"
+
+[dependencies]
+rayon = "1.8.0"

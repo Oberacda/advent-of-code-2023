@@ -24,6 +24,7 @@ jobs:
           toolchain: stable
       - uses: Swatinem/rust-cache@v2
       - uses: taiki-e/install-action@nextest
+      - uses: taiki-e/install-action@llvm-cov
       - name: Clippy
         uses: actions-rs/cargo@v1
         with:
@@ -36,8 +37,18 @@ jobs:
       - name: Test
         uses: actions-rs/cargo@v1
         with:
-          command: nextest
-          args: run
+          command: llvm-cov
+          args: nextest
+      - name: Export Coverage Report
+        uses: actions-rs/cargo@v1
+        with:
+          command: llvm-cov
+          args: report --codecov --output-path ./coverage.xml
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          fail_ci_if_error: true
+          files: ./coverage.xml,
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
