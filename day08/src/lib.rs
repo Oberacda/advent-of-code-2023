@@ -112,6 +112,6 @@ fn get_moves_from_location(map: &Map, start_location: &str) -> Option<u64> {
 
 pub fn get_moves_to_solve_ghost(map: &Map) -> Result<u64> {
     let moves_to_z_location: Vec<u64> = map.locations.par_iter().filter(|(id, _)| id.ends_with('A')).map(| (x, _)| *x).filter_map(|x| get_moves_from_location(&map, x)).collect();
-    let moves_count: u64 = moves_to_z_location.par_iter().cloned().reduce(|| 1_u64, |x, y| num::integer::lcm(x, y));
+    let moves_count: u64 = moves_to_z_location.par_iter().cloned().reduce(|| 1_u64, num::integer::lcm);
     Ok(moves_count)
 }

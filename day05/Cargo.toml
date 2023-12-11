@@ -18,7 +18,7 @@ name = "day05_part1"
 name = "day05_part2"
 
 [dependencies]
-regex = "1.10.2"
-itertools = "0.12.0"
-rayon = "1.7"
-ranges = "0.3.3"
+regex.workspace = true
+rayon.workspace = true
+ranges.workspace = true
+itertools.workspace = true

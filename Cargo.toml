@@ -1,12 +1,20 @@
 [workspace]
 resolver = "2"
-members = ["day01", "day02", "day03", "day04", "day05", "day06", "day07", "day08"]
+members = ["day01", "day02", "day03", "day04", "day05", "day06", "day07", "day08", "day09"]
 
 [workspace.package]
 authors = ["David Oberacker <developer@oberacker.me>"]
 edition = "2021"
 description = "Solution for this days Advent of Code exercise"
 publish = false
+
+[workspace.dependencies ]
+regex = "1.10.2"
+anyhow = "1.0.75"
+rayon = "1.8.0"
+num = "0.4"
+itertools = "0.12.0"
+ranges = "0.3.3"
 
 [profile.release]
 incremental = true

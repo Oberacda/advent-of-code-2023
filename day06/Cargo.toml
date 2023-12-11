@@ -20,4 +20,4 @@ name = "day06_part1"
 name = "day06_part2"
 
 [dependencies]
-rayon = "1.8.0"
+rayon.workspace = true

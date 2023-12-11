@@ -15,4 +15,4 @@ name = "day02_part1"
 name = "day02_part2"
 
 [dependencies]
-regex = "1.10.2"
+regex.workspace = true
