@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["day01", "day02", "day03", "day04", "day05", "day06", "day07", "day08", "day09"]
+members = ["day01", "day02", "day03", "day04", "day05", "day06", "day07", "day08", "day09", "day10"]
 
 [workspace.package]
 authors = ["David Oberacker <developer@oberacker.me>"]
@@ -15,6 +15,7 @@ rayon = "1.8.0"
 num = "0.4"
 itertools = "0.12.0"
 ranges = "0.3.3"
+ndarray = "0.15.6"
 
 [profile.release]
 incremental = true
