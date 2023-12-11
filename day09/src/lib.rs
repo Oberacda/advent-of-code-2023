@@ -82,3 +82,5 @@ pub fn get_result_path2(data: &Vec<Vec<i64>>) -> Result<i64> {
     }
     Ok(results.iter().sum::<i64>())
 }
+
+
